@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Helpers;
+use BotMan\BotMan\BotMan;
 use Illuminate\Http\Request;
 use BotMan\BotMan\BotManFactory;
 use Illuminate\Support\Facades\Log;
 use App\Services\ValidationService;
+use App\Services\TelegramBotService;
 use BotMan\BotMan\Drivers\DriverManager;
 use Spatie\SslCertificate\SslCertificate;
 use BotMan\BotMan\Exceptions\Base\BotManException;
@@ -26,28 +28,25 @@ class TelegramBotController extends Controller
         $request = app(Request::class);
         $botMan = BotManFactory::create($config);
         $data = $request->get('message');
-        $message = array_get($data, 'text', '');
+        $message = trim(array_get($data, 'text', ''));
         $senderId = array_get($data, 'from.id', '');
         Log::info('Request:', [
             'data' => $data,
             'message' => $message
         ]);
 
-        if (strpos($message, 'ssl-info') !== false) {
+        if (strpos($message, TelegramBotService::COMMAND_SSL_INFO) !== false) {
             try {
-                $messageParams = explode(' ', $message);
-                $domain = array_get($messageParams, 1, '');
+                $domain = trim(str_replace_first(TelegramBotService::COMMAND_SSL_INFO, '', $message));
                 $domain = Helpers::extractDomain($domain);
                 $validatorService = new ValidationService();
 
                 $validatorService->validate([
                     'domain' => $domain
-                ], [
-                    'domain' => 'required|url'
-                ], [
-                    'url' => __('bot.domain_invalid'),
-                    'required' => __('bot.domain_required')
-                ]);
+                ],
+                    TelegramBotService::getRules(),
+                    TelegramBotService::getValidationMessages()
+                );
                 if ($validatorService->fails()) {
                     Log::error('Validation errors', $validatorService->getMessages());
                     return $botMan->say($validatorService->getErrorsAsString(), $senderId)->send();
@@ -62,6 +61,10 @@ class TelegramBotController extends Controller
                 Log::error(__METHOD__, [$e]);
             }
         }
+        $botMan->hears(TelegramBotService::COMMAND_HELP, function (BotMan $botMan) {
+            $botMan->reply(implode("\n", TelegramBotService::getCommandList()));
+        });
+        $botMan->listen();
         exit();
     }
 }
