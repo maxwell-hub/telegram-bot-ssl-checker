@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use BotMan\BotMan\BotManFactory;
-use BotMan\BotMan\Drivers\DriverManager;
-use BotMan\BotMan\Exceptions\Base\BotManException;
 use Illuminate\Http\Request;
+use BotMan\BotMan\BotManFactory;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
+use App\Services\ValidationService;
+use BotMan\BotMan\Drivers\DriverManager;
 use Spatie\SslCertificate\SslCertificate;
+use BotMan\BotMan\Exceptions\Base\BotManException;
 
 class TelegramBotController extends Controller
 {
@@ -36,7 +36,8 @@ class TelegramBotController extends Controller
             try {
                 $messageParams = explode(' ', $message);
                 $domain = array_get($messageParams, 1, '');
-                $validator = Validator::make([
+                $validatorService = new ValidationService();
+                $validatorService->validate([
                     'domain' => $domain
                 ], [
                     'domain' => 'required|url'
@@ -44,9 +45,9 @@ class TelegramBotController extends Controller
                     'url' => __('bot.domain_invalid'),
                     'required' => __('bot.domain_required')
                 ]);
-                if ($validator->fails()) {
-                    $errorMessages = implode("\n", $validator->getMessageBag()->getMessages());
-                    return $botMan->say($errorMessages, $senderId)->send();
+                if ($validatorService->fails()) {
+                    ;
+                    return $botMan->say($validatorService->getErrorsAsString(), $senderId)->send();
                 }
                 $cert = SslCertificate::createForHostName($domain);
                 $textSslInfo = view('telegram_bot._ssl_info', [$cert])->render();
