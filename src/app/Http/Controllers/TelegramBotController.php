@@ -39,8 +39,8 @@ class TelegramBotController extends Controller
             try {
                 $domain = trim(str_replace_first(TelegramBotService::COMMAND_SSL_INFO, '', $message));
                 $domain = Helpers::extractDomain($domain);
-                $validatorService = new ValidationService();
 
+                $validatorService = new ValidationService();
                 $validatorService->validate([
                     'domain' => $domain
                 ],

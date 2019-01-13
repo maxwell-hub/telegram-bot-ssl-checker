@@ -20,8 +20,12 @@ class Helpers
         }
         $scheme = array_get($urlParams, 'scheme', '');
         $host = array_get($urlParams, 'host', '');
+        $path = array_get($urlParams, 'path', '');
         $domain = ($scheme) ? "{$scheme}://" : '';
         $domain .= $host;
+        if (!$host && $path) {
+            $domain .= $path;
+        }
         return $domain;
     }
 }
