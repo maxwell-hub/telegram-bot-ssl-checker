@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b9b2b805ae3d14775c14a2d9bfd0a37",
+    "content-hash": "a1ed8670a51501ef10d91a0fa462bf13",
     "packages": [
         {
             "name": "botman/botman",
@@ -2583,6 +2583,59 @@
                 "spatie"
             ],
             "time": "2017-09-18T09:51:20+00:00"
+        },
+        {
+            "name": "spatie/ssl-certificate",
+            "version": "1.12.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/ssl-certificate.git",
+                "reference": "7bc8b06c139eb0c766db16a642304b2cfe99ec4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/ssl-certificate/zipball/7bc8b06c139eb0c766db16a642304b2cfe99ec4a",
+                "reference": "7bc8b06c139eb0c766db16a642304b2cfe99ec4a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "nesbot/carbon": "^1.15|^2.0",
+                "php": "^7.0",
+                "spatie/macroable": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.4",
+                "spatie/phpunit-snapshot-assertions": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\SslCertificate\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A class to easily query the properties of an ssl certificate",
+            "homepage": "https://github.com/spatie/ssl-certificate",
+            "keywords": [
+                "spatie",
+                "ssl-certificate"
+            ],
+            "time": "2018-12-06T15:58:34+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

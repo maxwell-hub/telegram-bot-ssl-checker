@@ -16,4 +16,4 @@ Route::get('/', function () {
 });
 
 
-Route::post('telegram-bot', 'TelegramBotController');
+Route::post('telegram-bot', 'TelegramBotController@run');
