@@ -26,7 +26,7 @@ class TelegramBotService
     public static function getValidationMessages(): array
     {
         return [
-            'url' => __('bot.domain_invalid'),
+            'regex' => __('bot.domain_invalid'),
             'required' => __('bot.domain_required')
         ];
     }
