@@ -1,3 +1,9 @@
+#server {
+#    listen 80;
+#    server_name www.domain.com domain.com;
+#    return 301 https://$host$request_uri;
+#}
+
 server {
 
     listen 80;
@@ -10,8 +16,8 @@ server {
     # ssl_certificate /etc/nginx/ssl/default.crt;
     # ssl_certificate_key /etc/nginx/ssl/default.key;
 
-    # ssl_certificate /var/certs/cert1.pem;
-    # ssl_certificate_key /var/certs/privkey1.pem;
+    # ssl_certificate /var/certs/fullchain.pem;
+    # ssl_certificate_key /var/certs/privkey.pem;
 
     server_name hexnet.tk;
     root /var/www/public;
