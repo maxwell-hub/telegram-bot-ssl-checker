@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Helpers;
 use Illuminate\Http\Request;
 use BotMan\BotMan\BotManFactory;
 use Illuminate\Support\Facades\Log;
@@ -36,7 +37,9 @@ class TelegramBotController extends Controller
             try {
                 $messageParams = explode(' ', $message);
                 $domain = array_get($messageParams, 1, '');
+                $domain = Helpers::extractDomain($domain);
                 $validatorService = new ValidationService();
+
                 $validatorService->validate([
                     'domain' => $domain
                 ], [
@@ -46,11 +49,12 @@ class TelegramBotController extends Controller
                     'required' => __('bot.domain_required')
                 ]);
                 if ($validatorService->fails()) {
-                    ;
+                    Log::error('Validation errors', $validatorService->getMessages());
                     return $botMan->say($validatorService->getErrorsAsString(), $senderId)->send();
                 }
+
                 $cert = SslCertificate::createForHostName($domain);
-                $textSslInfo = view('telegram_bot._ssl_info', [$cert])->render();
+                $textSslInfo = view('telegram_bot._ssl_info', ['cert' => $cert])->render();
                 return $botMan->say($textSslInfo, $senderId)->send();
             } catch (BotManException $e) {
                 Log::error(__METHOD__, [$e]);
