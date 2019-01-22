@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendTelegramMessage;
 use App\Subscriber;
 use Illuminate\Http\Request;
+use App\Jobs\SendTelegramMessage;
 use App\Services\ValidationService;
-use App\Services\TelegramBotService;
 use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
@@ -58,6 +57,7 @@ class ApiController extends Controller
             ->whereType(Subscriber::TYPE_USER)
             ->pluck('telegram_id')
             ->toArray();
+        Log::info(__METHOD__, ['telegramUserIds' => $telegramUserIds]);
         $this->dispatch(new SendTelegramMessage($telegramUserIds, $message));
         return $this->successResponse('Message has been sent');
     }

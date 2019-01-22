@@ -65,19 +65,19 @@ class TelegramBotController extends Controller
         } elseif ($message == TelegramBotService::COMMAND_SUBSCRIBE) {
             Subscriber::create([
                 'telegram_id' => $senderId,
-                'chat_id' => $request->get('chat.chat_id'),
-                'username' => $request->get('from.username'),
-                'first_name' => $request->get('from.first_name'),
-                'last_name' => $request->get('from.last_name'),
-                'language_code' => $request->get('from.language_code'),
+                'chat_id' => array_get($data, 'chat.chat_id'),
+                'username' => array_get($data, 'from.username'),
+                'first_name' => array_get($data, 'from.first_name'),
+                'last_name' => array_get($data, 'from.last_name'),
+                'language_code' => array_get($data, 'from.language_code'),
             ]);
             $botMan->hears(TelegramBotService::COMMAND_SUBSCRIBE, function (BotMan $botMan) {
                 $botMan->reply(__('bot.success_subscribed'));
             });
-        } elseif ($message == TelegramBotService::COMMAND_SUBSCRIBE) {
+        } elseif ($message == TelegramBotService::COMMAND_UNSUBSCRIBE) {
             Subscriber::whereTelegramId($senderId)
                 ->detete();
-            $botMan->hears(TelegramBotService::COMMAND_SUBSCRIBE, function (BotMan $botMan) {
+            $botMan->hears(TelegramBotService::COMMAND_UNSUBSCRIBE, function (BotMan $botMan) {
                 $botMan->reply(__('bot.success_unsubscribed'));
             });
         } elseif ($message == TelegramBotService::COMMAND_HELP) {
@@ -91,6 +91,7 @@ class TelegramBotController extends Controller
                 Log::error(__METHOD__, [$e->getMessage(), $data]);
             }
         }
+        $botMan->listen();
         exit();
     }
 }
