@@ -76,7 +76,7 @@ class TelegramBotController extends Controller
             });
         } elseif ($message == TelegramBotService::COMMAND_UNSUBSCRIBE) {
             Subscriber::whereTelegramId($senderId)
-                ->detete();
+                ->delete();
             $botMan->hears(TelegramBotService::COMMAND_UNSUBSCRIBE, function (BotMan $botMan) {
                 $botMan->reply(__('bot.success_unsubscribed'));
             });

@@ -2708,7 +2708,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     subscribers: function subscribers() {
-      console.log('call to get subscribers');
       return this.$store.getters.getSubscribers;
     },
     hasSelected: function hasSelected() {
@@ -2745,10 +2744,8 @@ __webpack_require__.r(__webpack_exports__);
     handleModalOk: function handleModalOk(e) {
       var _this = this;
 
-      console.log('handleModalOk', e);
       this.$store.dispatch('deleteSubscribers', this.selectedSubscribers).then(function () {
         _this.selectedSubscribers = [];
-        console.log('DELETE IS DONE. MAKE REQUEST TO UPDATE');
 
         _this.refreshHandle();
       });
@@ -36470,10 +36467,9 @@ function () {
               case 5:
                 _ref = _context.sent;
                 data = _ref.data;
-                console.log('api request', data);
                 return _context.abrupt("return", data);
 
-              case 9:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -36534,10 +36530,9 @@ function () {
                 idsArr = ids.join(';');
                 queryParams = '?ids=' + idsArr;
                 _api$delete = api.delete(API_ENDPOINT_DELETE + queryParams), data = _api$delete.data;
-                console.log('deleteSubscribers', data);
                 return _context3.abrupt("return", data);
 
-              case 5:
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -36910,11 +36905,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   },
   mutations: {
     setList: function setList(state, payload) {
-      console.log('setList - payload', payload);
       state.subscribers = payload;
     },
     setPagination: function setPagination(state, payload) {
-      console.log('setTotal - payload', payload);
       state.pagination.total = payload.total;
       state.pagination.current = payload.current_page;
     },
@@ -36970,9 +36963,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
 
               case 3:
                 data = _context2.sent;
-                console.log('sendMessage', data);
 
-              case 5:
+              case 4:
               case "end":
                 return _context2.stop();
             }

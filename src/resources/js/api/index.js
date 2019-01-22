@@ -27,7 +27,6 @@ class Api {
             queryParams += 'per_page=' + perPage
         }
         const {data} = await api.get(API_ENDPOINT_GET_SUBSCRIBERS + queryParams);
-        console.log('api request', data);
         return data;
     }
 
@@ -43,7 +42,6 @@ class Api {
         let idsArr = ids.join(';');
         let queryParams = '?ids=' + idsArr;
         const {data} = api.delete(API_ENDPOINT_DELETE + queryParams);
-        console.log('deleteSubscribers', data);
         return data;
     }
 

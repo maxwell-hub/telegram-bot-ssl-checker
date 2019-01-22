@@ -20,6 +20,7 @@ class TelegramBotService
         self::COMMAND_HELP => '/help - get information about available commands',
         self::COMMAND_SSL_INFO => 'ssl-info {domain} - get information about SSL certificate which domain used. Example: ssl-info www.example.com',
         self::COMMAND_SUBSCRIBE => 'subscribe - subscribe on the news from this bot',
+        self::COMMAND_UNSUBSCRIBE => 'unsubscribe - unsubscribe from this bot',
     ];
 
     /**
@@ -33,9 +34,8 @@ class TelegramBotService
         $config['telegram'] = config('app.telegram');
         $botMan = BotManFactory::create($config);
         try {
-            foreach ($subscribersIds as $subscribersId) {
-                $botMan->say($message, $subscribersId);
-            }
+            Log::info(__METHOD__ . ' Message sent', ['subscribersIds' => $subscribersIds, 'message' => $message]);
+            $botMan->say($message, $subscribersIds);
         } catch (\Exception $e) {
             Log::error(__METHOD__, [
                 $e->getMessage(),

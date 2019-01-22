@@ -149,7 +149,6 @@
         },
         computed: {
             subscribers() {
-                console.log('call to get subscribers');
                 return this.$store.getters.getSubscribers;
             },
             hasSelected() {
@@ -183,11 +182,9 @@
                 this.isMessageAreaShown = true;
             },
             handleModalOk(e) {
-                console.log('handleModalOk', e);
                 this.$store.dispatch('deleteSubscribers', this.selectedSubscribers)
                     .then(() => {
                         this.selectedSubscribers = [];
-                        console.log('DELETE IS DONE. MAKE REQUEST TO UPDATE');
                         this.refreshHandle();
                     })
             },

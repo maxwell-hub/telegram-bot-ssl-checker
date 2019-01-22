@@ -35,11 +35,9 @@ export const store = new Vuex.Store({
     },
     mutations: {
         setList: (state, payload) => {
-            console.log('setList - payload', payload);
             state.subscribers = payload
         },
         setPagination: (state, payload) => {
-            console.log('setTotal - payload', payload);
             state.pagination.total = payload.total;
             state.pagination.current = payload.current_page;
         },
@@ -59,7 +57,6 @@ export const store = new Vuex.Store({
         },
         async sendMessage({commit}, requestData) {
             const data = await Api.sendMessage(requestData.list, requestData.message);
-            console.log('sendMessage', data);
         },
         async deleteSubscribers({commit}, selectedList) {
             await Api.deleteSubscribers(selectedList);
