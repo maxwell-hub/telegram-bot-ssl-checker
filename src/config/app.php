@@ -171,7 +171,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
@@ -228,5 +228,9 @@ return [
 
     'telegram' => [
         'token' => env('TELEGRAM_TOKEN')
+    ],
+
+    'api' => [
+        'per_page' => 5
     ]
 ];

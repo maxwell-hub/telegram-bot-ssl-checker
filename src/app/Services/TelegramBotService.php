@@ -2,6 +2,10 @@
 
 namespace App\Services;
 
+use BotMan\BotMan\BotManFactory;
+use BotMan\BotMan\Drivers\DriverManager;
+use Illuminate\Support\Facades\Log;
+
 class TelegramBotService
 {
     const COMMAND_HELP = '/help';
@@ -10,12 +14,41 @@ class TelegramBotService
 
     const COMMAND_SUBSCRIBE = 'subscribe';
 
+    const COMMAND_UNSUBSCRIBE = 'unsubscribe';
+
     private static $descriptions = [
         self::COMMAND_HELP => '/help - get information about available commands',
         self::COMMAND_SSL_INFO => 'ssl-info {domain} - get information about SSL certificate which domain used. Example: ssl-info www.example.com',
         self::COMMAND_SUBSCRIBE => 'subscribe - subscribe on the news from this bot',
     ];
 
+    /**
+     * Send messages to telegram subscribers
+     * @param array $subscribersIds
+     * @param string $message
+     */
+    public function send(array $subscribersIds, string $message)
+    {
+        DriverManager::loadDriver(\BotMan\Drivers\Telegram\TelegramDriver::class);
+        $config['telegram'] = config('app.telegram');
+        $botMan = BotManFactory::create($config);
+        try {
+            foreach ($subscribersIds as $subscribersId) {
+                $botMan->say($message, $subscribersId);
+            }
+        } catch (\Exception $e) {
+            Log::error(__METHOD__, [
+                $e->getMessage(),
+                $message,
+                $subscribersIds
+            ]);
+        }
+    }
+
+    /**
+     * Returns validation rules
+     * @return array
+     */
     public static function getRules(): array
     {
         return [
@@ -23,6 +56,10 @@ class TelegramBotService
         ];
     }
 
+    /**
+     * Returns validation messages
+     * @return array
+     */
     public static function getValidationMessages(): array
     {
         return [
