@@ -1,10 +1,11 @@
 import axios from "axios";
 
-const API_ENDPOINT_GET_SUBSCRIBERS = '//localhost/api/v1/subscribers';
-const API_ENDPOINT_SEND_MESSAGE = '//localhost/api/v1/subscribers/send-message';
-const API_ENDPOINT_DELETE = '//localhost/api/v1/subscribers';
-const API_ENDPOINT_POPULATE = '//localhost/api/v1/test/populate';
-const API_ENDPOINT_CLEAN = '//localhost/api/v1/test/clean';
+const API_BASE_URL = 'https://hexnet.tk/api/v1';
+const API_ENDPOINT_GET_SUBSCRIBERS = API_BASE_URL + '/subscribers';
+const API_ENDPOINT_SEND_MESSAGE = API_BASE_URL + '/subscribers/send-message';
+const API_ENDPOINT_DELETE = API_BASE_URL + '/subscribers';
+const API_ENDPOINT_POPULATE = API_BASE_URL + '/test/populate';
+const API_ENDPOINT_CLEAN = API_BASE_URL + '/test/clean';
 
 
 const api = axios.create({

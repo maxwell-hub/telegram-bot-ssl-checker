@@ -36420,11 +36420,12 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 
-var API_ENDPOINT_GET_SUBSCRIBERS = '//localhost/api/v1/subscribers';
-var API_ENDPOINT_SEND_MESSAGE = '//localhost/api/v1/subscribers/send-message';
-var API_ENDPOINT_DELETE = '//localhost/api/v1/subscribers';
-var API_ENDPOINT_POPULATE = '//localhost/api/v1/test/populate';
-var API_ENDPOINT_CLEAN = '//localhost/api/v1/test/clean';
+var API_BASE_URL = 'https://hexnet.tk/api/v1';
+var API_ENDPOINT_GET_SUBSCRIBERS = API_BASE_URL + '/subscribers';
+var API_ENDPOINT_SEND_MESSAGE = API_BASE_URL + '/subscribers/send-message';
+var API_ENDPOINT_DELETE = API_BASE_URL + '/subscribers';
+var API_ENDPOINT_POPULATE = API_BASE_URL + '/test/populate';
+var API_ENDPOINT_CLEAN = API_BASE_URL + '/test/clean';
 var api = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   baseURL: API_ENDPOINT_GET_SUBSCRIBERS,
   withCredentials: false,
