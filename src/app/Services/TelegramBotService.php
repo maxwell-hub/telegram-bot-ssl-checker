@@ -4,6 +4,7 @@ namespace App\Services;
 
 use BotMan\BotMan\BotManFactory;
 use BotMan\BotMan\Drivers\DriverManager;
+use BotMan\Drivers\Telegram\TelegramDriver;
 use Illuminate\Support\Facades\Log;
 
 class TelegramBotService
@@ -35,7 +36,7 @@ class TelegramBotService
         $botMan = BotManFactory::create($config);
         try {
             Log::info(__METHOD__ . ' Message sent', ['subscribersIds' => $subscribersIds, 'message' => $message]);
-            $botMan->say($message, $subscribersIds);
+            $botMan->say($message, $subscribersIds, TelegramDriver::class);
         } catch (\Exception $e) {
             Log::error(__METHOD__, [
                 $e->getMessage(),
