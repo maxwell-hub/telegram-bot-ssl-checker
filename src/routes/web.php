@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::post('telegram-bot', 'TelegramBotController@run');
 
 Route::get('/kernel-populate-subscribers', function (\Illuminate\Http\Request $request) {
