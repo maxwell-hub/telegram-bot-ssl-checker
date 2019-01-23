@@ -13,6 +13,26 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix' => '/v1/subscribers'
+], function () {
+    /* Get collection of users */
+    Route::get('/', 'ApiController@index');
+
+    /* Unsubscribe users */
+    Route::delete('/', 'ApiController@unsubscribe');
+
+    /* Send message to selected subscribers */
+    Route::post('/send-message', 'ApiController@sendMessage');
+});
+
+/* Routes for testing */
+Route::group([
+    'prefix' => '/v1/test'
+], function () {
+    /* Seed fake subscribers into DB */
+    Route::get('/populate', 'ApiController@populate');
+
+    /* Remove seeded subscribers from DB */
+    Route::get('/clean', 'ApiController@clean');
 });

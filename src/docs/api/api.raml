@@ -1,0 +1,79 @@
+#%RAML 1.0
+---
+
+title: Subscibers API
+version: v1
+baseUri: https://hexnet.tk/api/v1/
+
+/subscribers:
+  get:
+    queryParameters:
+      page:
+        type: integer
+        description: Set requested number of page for request
+        required: false
+        default: 1
+        minimum: 1
+        example: 2
+
+      per_page:
+        type: integer
+        description: Set quantity of articles on one page
+        required: false
+        default: 5
+        minimum: 1
+        example: 10
+    responses:
+      200:
+        body:
+          application/json:
+            schema: !include schemas/SubscribersList.json
+  delete:
+    queryParameters:
+      ids:
+        type: string
+        description: Multiple deleting subscribers. IDs of subscribers must specified. Use ';' for separating IDs
+        required: true
+        example: 3;4;20;1;
+    responses:
+      202:
+        body:
+          application/json:
+            schema: !include schemas/Success.json
+      400:
+        body:
+          application/json:
+            schema: !include schemas/Erros.json
+
+  /send-message:
+    post:
+      description: Send message to subscribers
+      body:
+        application/json:
+          type: |
+            {
+              "type": "object",
+              "required": true,
+              "properties": {
+                "ids": {
+                  "type": "array",
+                  "required": true,
+                  "items": {
+                    "type": ["integer", "string"]
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "requried": true
+                }
+              }
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              schema: !include schemas/Success.json
+        400:
+          body:
+            application/json:
+              schema: !include schemas/Erros.json
